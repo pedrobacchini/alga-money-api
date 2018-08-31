@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -26,12 +27,11 @@ public class CategoriaResource {
 
     @GetMapping("/{id}")
     public ResponseEntity<Categoria> buscarPeloID(@PathVariable Long id){
-        System.out.println("buscarPeloID");
         //Old Way
         //Categoria categoria = categoriaRepository.findOne(id);
         //New Way
         Optional<Categoria> categoria = categoriaRepository.findById(id);
-        System.out.println(categoria);
+        categoria.ifPresent(System.out::println);
         if(categoria.isPresent())
             return ResponseEntity.ok(categoria.get());
         else
@@ -39,7 +39,7 @@ public class CategoriaResource {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> criar(@RequestBody Categoria categoria, HttpServletResponse response){
+    public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria, HttpServletResponse response){
 
         Categoria categoriaSalva = categoriaRepository.save(categoria);
 
