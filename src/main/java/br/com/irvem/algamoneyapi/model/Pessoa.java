@@ -1,5 +1,6 @@
 package br.com.irvem.algamoneyapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,5 +26,11 @@ public class Pessoa {
     private Endereco endereco;
     @NotNull
     private Boolean ativo;
+
+    @JsonIgnore
+    @Transient
+    public boolean isInativo(){
+        return !this.ativo;
+    }
 }
 

@@ -2,7 +2,7 @@ package br.com.irvem.algamoneyapi.resource;
 
 import br.com.irvem.algamoneyapi.event.RecursoCriadoEvent;
 import br.com.irvem.algamoneyapi.model.Lancamento;
-import br.com.irvem.algamoneyapi.repository.LancamentoRepository;
+import br.com.irvem.algamoneyapi.service.LancamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -18,24 +18,24 @@ import java.util.Optional;
 @RequestMapping("/lancamentos")
 public class LancamentoResource {
 
-    private LancamentoRepository lancamentoRepository;
-
     private ApplicationEventPublisher publisher;
 
+    private LancamentoService lancamentoService;
+
     @Autowired
-    public LancamentoResource(LancamentoRepository lancamentoRepository, ApplicationEventPublisher publisher) {
-        this.lancamentoRepository = lancamentoRepository;
+    public LancamentoResource(ApplicationEventPublisher publisher, LancamentoService lancamentoService) {
         this.publisher = publisher;
+        this.lancamentoService = lancamentoService;
     }
 
     @GetMapping
     public List<Lancamento> listar(){
-        return lancamentoRepository.findAll();
+        return lancamentoService.listar();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Lancamento> buscarPeloID(@PathVariable Long id){
-        Optional<Lancamento> lancamento = lancamentoRepository.findById(id);
+        Optional<Lancamento> lancamento = lancamentoService.buscarPeloID(id);
         if(lancamento.isPresent())
             return ResponseEntity.ok(lancamento.get());
         else
@@ -44,7 +44,7 @@ public class LancamentoResource {
 
     @PostMapping
     public ResponseEntity<Lancamento> criar(@Valid @RequestBody Lancamento lancamento, HttpServletResponse response){
-        Lancamento lacamentoSalvo = lancamentoRepository.save(lancamento);
+        Lancamento lacamentoSalvo = lancamentoService.salvar(lancamento);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, lacamentoSalvo.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(lacamentoSalvo);
     }
