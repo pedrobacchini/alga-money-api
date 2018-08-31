@@ -1,15 +1,16 @@
 package br.com.irvem.algamoneyapi.resource;
 
+import br.com.irvem.algamoneyapi.event.RecursoCriadoEvent;
 import br.com.irvem.algamoneyapi.model.Categoria;
 import br.com.irvem.algamoneyapi.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,9 @@ public class CategoriaResource {
     @Autowired
     CategoriaRepository categoriaRepository;
 
+    @Autowired
+    private ApplicationEventPublisher publisher;
+
     @GetMapping
     public List<Categoria> listar(){
         return categoriaRepository.findAll();
@@ -27,9 +31,6 @@ public class CategoriaResource {
 
     @GetMapping("/{id}")
     public ResponseEntity<Categoria> buscarPeloID(@PathVariable Long id){
-        //Old Way
-        //Categoria categoria = categoriaRepository.findOne(id);
-        //New Way
         Optional<Categoria> categoria = categoriaRepository.findById(id);
         categoria.ifPresent(System.out::println);
         if(categoria.isPresent())
@@ -40,12 +41,8 @@ public class CategoriaResource {
 
     @PostMapping
     public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria, HttpServletResponse response){
-
         Categoria categoriaSalva = categoriaRepository.save(categoria);
-
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(categoriaSalva.getId()).toUri();
-        response.setHeader("Location",uri.toASCIIString());
-
-        return ResponseEntity.created(uri).body(categoriaSalva);
+        publisher.publishEvent(new RecursoCriadoEvent(this, response, categoriaSalva.getId()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoriaSalva);
     }
 }

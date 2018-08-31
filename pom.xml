@@ -58,6 +58,21 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
 
+        <!--Aparentemente nas versoes mais novas do Spring
+        nao precisa colocar essas dependencias mais-->
+        <!--&lt;!&ndash; Hibernate Java 8 Support &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-java8</artifactId>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>com.fasterxml.jackson.datatype</groupId>-->
+            <!--<artifactId>jackson-datatype-jsr310</artifactId>-->
+            <!--&lt;!&ndash;<version>2.9.6</version>&ndash;&gt;-->
+        <!--</dependency>-->
+
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
