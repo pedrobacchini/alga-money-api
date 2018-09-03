@@ -58,8 +58,7 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
 
-        <!--Aparentemente nas versoes mais novas do Spring
-        nao precisa colocar essas dependencias mais-->
+        <!--Aparentemente nas versoes mais novas do Spring nao precisa colocar essas dependencias mais-->
         <!--&lt;!&ndash; Hibernate Java 8 Support &ndash;&gt;-->
         <!--<dependency>-->
             <!--<groupId>org.hibernate</groupId>-->
@@ -72,6 +71,7 @@
             <!--&lt;!&ndash;<version>2.9.6</version>&ndash;&gt;-->
         <!--</dependency>-->
 
+        <!--ExceptionUtils-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -83,6 +83,12 @@
             <artifactId>lombok</artifactId>
             <version>1.16.20</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!--Para gerar automaticamente classes apartir do model-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
         </dependency>
     </dependencies>
 

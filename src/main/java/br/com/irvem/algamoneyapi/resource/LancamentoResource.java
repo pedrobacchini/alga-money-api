@@ -2,6 +2,7 @@ package br.com.irvem.algamoneyapi.resource;
 
 import br.com.irvem.algamoneyapi.event.RecursoCriadoEvent;
 import br.com.irvem.algamoneyapi.model.Lancamento;
+import br.com.irvem.algamoneyapi.repository.filter.LancamentoFilter;
 import br.com.irvem.algamoneyapi.service.LancamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -29,8 +30,9 @@ public class LancamentoResource {
     }
 
     @GetMapping
-    public List<Lancamento> listar(){
-        return lancamentoService.listar();
+    public List<Lancamento> pesquisar(LancamentoFilter lancamentoFilter){
+        System.out.println(lancamentoFilter.toString());
+        return lancamentoService.pesquisar(lancamentoFilter);
     }
 
     @GetMapping("/{id}")
@@ -47,5 +49,11 @@ public class LancamentoResource {
         Lancamento lacamentoSalvo = lancamentoService.salvar(lancamento);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, lacamentoSalvo.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(lacamentoSalvo);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void remover(@PathVariable Long id){
+        lancamentoService.remover(id);
     }
 }

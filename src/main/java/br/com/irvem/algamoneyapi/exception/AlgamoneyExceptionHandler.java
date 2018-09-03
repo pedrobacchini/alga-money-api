@@ -70,16 +70,4 @@ public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler {
         }
         return erros;
     }
-
-    public class Erro{
-        @Getter
-        private String mensagemUsuario;
-        @Getter
-        private String mensagemDesenvolvedor;
-
-        public Erro(String mensagemUsuario, String mensagemDesenvolvedor) {
-            this.mensagemUsuario = mensagemUsuario;
-            this.mensagemDesenvolvedor = mensagemDesenvolvedor;
-        }
-    }
 }
