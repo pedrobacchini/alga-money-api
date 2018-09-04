@@ -38,10 +38,7 @@ public class PessoaResource {
     @GetMapping("/{id}")
     public ResponseEntity<Pessoa> buscarPeloID(@PathVariable Long id){
         Optional<Pessoa> pessoa = pessoaRepository.findById(id);
-        if(pessoa.isPresent())
-            return ResponseEntity.ok(pessoa.get());
-        else
-            return ResponseEntity.notFound().build();
+        return pessoa.isPresent() ? ResponseEntity.ok(pessoa.get()) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
