@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /*
  * A anotação ResourceServerConfigurerAdapter gera um WebSecurityConfigurerAdapter.
@@ -26,6 +27,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("admin")
                 .password("{noop}admin")
                 .roles("ROLE");
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return super.userDetailsService();
     }
 
     @Bean
