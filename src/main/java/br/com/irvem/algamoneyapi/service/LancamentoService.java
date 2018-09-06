@@ -5,6 +5,7 @@ import br.com.irvem.algamoneyapi.model.Pessoa;
 import br.com.irvem.algamoneyapi.repository.LancamentoRepository;
 import br.com.irvem.algamoneyapi.repository.PessoaRepository;
 import br.com.irvem.algamoneyapi.repository.filter.LancamentoFilter;
+import br.com.irvem.algamoneyapi.repository.projection.ResumoLancamento;
 import br.com.irvem.algamoneyapi.service.exception.PessoaInexistenteOuInativaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +28,10 @@ public class LancamentoService {
 
     public Page<Lancamento> pesquisar(LancamentoFilter lancamentoFilter, Pageable pageable) {
         return lancamentoRepository.filtrar(lancamentoFilter, pageable);
+    }
+
+    public Page<ResumoLancamento> resumir(LancamentoFilter lancamentoFilter, Pageable pageable) {
+        return lancamentoRepository.resumir(lancamentoFilter, pageable);
     }
 
     public Optional<Lancamento> buscarPeloID(Long id) {

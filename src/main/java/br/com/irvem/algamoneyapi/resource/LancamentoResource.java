@@ -4,6 +4,7 @@ import br.com.irvem.algamoneyapi.event.RecursoCriadoEvent;
 import br.com.irvem.algamoneyapi.exception.Erro;
 import br.com.irvem.algamoneyapi.model.Lancamento;
 import br.com.irvem.algamoneyapi.repository.filter.LancamentoFilter;
+import br.com.irvem.algamoneyapi.repository.projection.ResumoLancamento;
 import br.com.irvem.algamoneyapi.service.LancamentoService;
 import br.com.irvem.algamoneyapi.service.exception.PessoaInexistenteOuInativaException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,12 @@ public class LancamentoResource {
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
     public Page<Lancamento> pesquisar(LancamentoFilter lancamentoFilter, Pageable pageable){
         return lancamentoService.pesquisar(lancamentoFilter, pageable);
+    }
+
+    @GetMapping(params = "resumo")
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+    public Page<ResumoLancamento> resumir(LancamentoFilter lancamentoFilter, Pageable pageable){
+        return lancamentoService.resumir(lancamentoFilter, pageable);
     }
 
     @GetMapping("/{id}")

@@ -1,8 +1,11 @@
 package br.com.irvem.algamoneyapi.repository.lancamento;
 
+import br.com.irvem.algamoneyapi.model.Categoria_;
 import br.com.irvem.algamoneyapi.model.Lancamento;
 import br.com.irvem.algamoneyapi.model.Lancamento_;
+import br.com.irvem.algamoneyapi.model.Pessoa_;
 import br.com.irvem.algamoneyapi.repository.filter.LancamentoFilter;
+import br.com.irvem.algamoneyapi.repository.projection.ResumoLancamento;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +41,29 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
         return new PageImpl<>(query.getResultList(), pageable, total(lancamentoFilter));
     }
 
+    @Override
+    public Page<ResumoLancamento> resumir(LancamentoFilter lancamentoFilter, Pageable pageable) {
+        CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+        CriteriaQuery<ResumoLancamento> criteriaQuery = criteriaBuilder.createQuery(ResumoLancamento.class);
+        Root<Lancamento> root = criteriaQuery.from(Lancamento.class);
+
+        criteriaQuery.select(criteriaBuilder.construct(ResumoLancamento.class,
+                root.get(Lancamento_.id), root.get(Lancamento_.descricao),
+                root.get(Lancamento_.dataVencimento), root.get(Lancamento_.dataPagamento),
+                root.get(Lancamento_.valor), root.get(Lancamento_.tipo),
+                root.get(Lancamento_.categoria).get(Categoria_.nome),
+                root.get(Lancamento_.pessoa).get(Pessoa_.nome)));
+
+        Predicate[] predicates = criarRestricoes(lancamentoFilter, criteriaBuilder, root);
+        criteriaQuery.where(predicates);
+
+        TypedQuery<ResumoLancamento> query = manager.createQuery(criteriaQuery);
+
+        adicionarRestricoesDePaginacao(query, pageable);
+
+        return new PageImpl<>(query.getResultList(), pageable, total(lancamentoFilter));
+    }
+
     private Long total(LancamentoFilter lancamentoFilter) {
         CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
@@ -50,7 +76,7 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
         return manager.createQuery(criteriaQuery).getSingleResult();
     }
 
-    private void adicionarRestricoesDePaginacao(TypedQuery<Lancamento> query, Pageable pageable) {
+    private void adicionarRestricoesDePaginacao(TypedQuery<?> query, Pageable pageable) {
         int paginaAtual = pageable.getPageNumber();
         int totalRegistrospPorPagina = pageable.getPageSize();
         int primeiroRegistroDaPagina = paginaAtual * totalRegistrospPorPagina;
