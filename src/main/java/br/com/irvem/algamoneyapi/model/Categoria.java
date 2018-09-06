@@ -10,6 +10,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
+@Getter
+@Setter
 @ToString
 @Table(name = "categorias")
 @EqualsAndHashCode(of = {"id"})
@@ -17,11 +19,9 @@ public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter
     private Long id;
 
     @NotNull
-    @Getter @Setter
     @Size(min = 3, max = 20)
     private String nome;
 }
