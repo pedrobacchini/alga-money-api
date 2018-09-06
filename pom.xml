@@ -117,6 +117,14 @@
             <artifactId>spring-security-jwt</artifactId>
             <version>${spring-security-jwt.version}</version>
         </dependency>
+
+        <!-- Para usar o processador de anotacoes @ConfigurationProperties("algamoney")-->
+        <!-- Para criar profiles de execusao-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>
