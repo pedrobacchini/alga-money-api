@@ -7,13 +7,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class PessoaService  {
 
+    private PessoaRepository pessoaRepository;
+
     @Autowired
-    PessoaRepository pessoaRepository;
+    public PessoaService(PessoaRepository pessoaRepository) {
+        this.pessoaRepository = pessoaRepository;
+    }
+
+    public List<Pessoa> listar(){ return pessoaRepository.findAll(); }
+
+    public Optional<Pessoa> buscarPeloID(Long id) { return pessoaRepository.findById(id); }
+
+    public Pessoa salvar(Pessoa pessoa) { return pessoaRepository.save(pessoa); }
+
+    public void remover(Long id) {
+        pessoaRepository.deleteById(id);
+    }
 
     public Pessoa atualizar(Long id, Pessoa pessoa){
         Pessoa pessoaSalva = buscarPessoaPeloCodigo(id);
