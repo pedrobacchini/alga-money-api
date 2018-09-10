@@ -2,6 +2,7 @@ package br.com.irvem.algamoneyapi.token;
 
 import br.com.irvem.algamoneyapi.config.property.AlgamoneyApiProperty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 Interceptar toda resposta que tem como corpo um token de acesso do tipo OAuth2AccessToken
 remover o refresh token do body e colocar no cookie
  */
+@Profile("oauth-security")
 @ControllerAdvice
 public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2AccessToken> {
 
