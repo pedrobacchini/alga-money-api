@@ -2,12 +2,14 @@ package br.com.irvem.algamoneyapi.service;
 
 import br.com.irvem.algamoneyapi.model.Pessoa;
 import br.com.irvem.algamoneyapi.repository.PessoaRepository;
+import br.com.irvem.algamoneyapi.repository.filter.PessoaFilter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,7 +22,9 @@ public class PessoaService  {
         this.pessoaRepository = pessoaRepository;
     }
 
-    public List<Pessoa> listar(){ return pessoaRepository.findAll(); }
+    public Page<Pessoa> pesquisar(PessoaFilter pessoaFilter, Pageable pageable){
+        return pessoaRepository.filtrar(pessoaFilter, pageable);
+    }
 
     public Optional<Pessoa> buscarPeloID(Long id) { return pessoaRepository.findById(id); }
 
