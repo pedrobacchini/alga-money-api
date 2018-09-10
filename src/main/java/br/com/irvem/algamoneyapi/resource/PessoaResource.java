@@ -38,10 +38,7 @@ public class PessoaResource {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
-    public ResponseEntity<Pessoa> buscarPeloID(@PathVariable Long id){
-        Optional<Pessoa> pessoa = pessoaService.buscarPeloID(id);
-        return pessoa.isPresent() ? ResponseEntity.ok(pessoa.get()) : ResponseEntity.notFound().build();
-    }
+    public Pessoa buscarPeloID(@PathVariable Long id){ return pessoaService.buscarPeloID(id); }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_CADASTRAR_PESSOA') and #oauth2.hasScope('write')")

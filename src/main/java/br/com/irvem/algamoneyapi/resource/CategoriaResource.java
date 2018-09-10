@@ -5,6 +5,7 @@ import br.com.irvem.algamoneyapi.model.Categoria;
 import br.com.irvem.algamoneyapi.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,9 +37,9 @@ public class CategoriaResource {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA') and #oauth2.hasScope('read')")
-    public ResponseEntity<Categoria> buscarPeloID(@PathVariable Long id){
+    public Categoria buscarPeloID(@PathVariable Long id){
         Optional<Categoria> categoria = categoriaRepository.findById(id);
-        return categoria.isPresent() ? ResponseEntity.ok(categoria.get()) : ResponseEntity.notFound().build();
+        return categoria.orElseThrow(() -> new EmptyResultDataAccessException(1));
     }
 
     @PostMapping

@@ -18,11 +18,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/lancamentos")
@@ -55,10 +55,7 @@ public class LancamentoResource {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
-    public ResponseEntity<Lancamento> buscarPeloID(@PathVariable Long id){
-        Optional<Lancamento> lancamento = lancamentoService.buscarPeloID(id);
-        return lancamento.isPresent() ? ResponseEntity.ok(lancamento.get()) : ResponseEntity.notFound().build();
-    }
+    public Lancamento buscarPeloID(@PathVariable Long id){ return lancamentoService.buscarPeloID(id); }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
@@ -79,7 +76,16 @@ public class LancamentoResource {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_REMOVER_LANCAMENTO') and #oauth2.hasScope('write')")
-    public void remover(@PathVariable Long id){
-        lancamentoService.remover(id);
+    public void remover(@PathVariable Long id){ lancamentoService.remover(id); }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
+    public ResponseEntity<Lancamento> atualizar(@PathVariable Long id, @Valid @RequestBody Lancamento lancamento){
+        try {
+            Lancamento lancamentoSalvo = lancamentoService.atualizar(id, lancamento);
+            return ResponseEntity.ok(lancamentoSalvo);
+        }catch (IllegalArgumentException ex){
+            return ResponseEntity.notFound().build();
+        }
     }
 }

@@ -26,7 +26,12 @@ public class PessoaService  {
         return pessoaRepository.filtrar(pessoaFilter, pageable);
     }
 
-    public Optional<Pessoa> buscarPeloID(Long id) { return pessoaRepository.findById(id); }
+//    public Optional<Pessoa> buscarPeloID(Long id) { return pessoaRepository.findById(id); }
+
+    public Pessoa buscarPeloID(Long id) {
+        Optional<Pessoa> pessoaSalva = pessoaRepository.findById(id);
+        return pessoaSalva.orElseThrow(() -> new EmptyResultDataAccessException(1));
+    }
 
     public Pessoa salvar(Pessoa pessoa) { return pessoaRepository.save(pessoa); }
 
@@ -35,22 +40,14 @@ public class PessoaService  {
     }
 
     public Pessoa atualizar(Long id, Pessoa pessoa){
-        Pessoa pessoaSalva = buscarPessoaPeloCodigo(id);
+        Pessoa pessoaSalva = buscarPeloID(id);
         BeanUtils.copyProperties(pessoa, pessoaSalva, "id");
         return pessoaRepository.save(pessoaSalva);
     }
 
     public void atualizarPropriedadeAtivo(Long id, Boolean ativo) {
-        Pessoa pessoaSalva = buscarPessoaPeloCodigo(id);
+        Pessoa pessoaSalva = buscarPeloID(id);
         pessoaSalva.setAtivo(ativo);
         pessoaRepository.save(pessoaSalva);
     }
-
-    private Pessoa buscarPessoaPeloCodigo(Long id) {
-        Optional<Pessoa> pessoaSalva = pessoaRepository.findById(id);
-        if(!pessoaSalva.isPresent())
-            throw new EmptyResultDataAccessException(1);
-        return pessoaSalva.get();
-    }
-
 }
