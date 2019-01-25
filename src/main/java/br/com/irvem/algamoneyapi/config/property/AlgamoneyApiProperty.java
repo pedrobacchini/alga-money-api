@@ -7,8 +7,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("algamoney")
 public class AlgamoneyApiProperty {
 
-    @Getter @Setter
-    private final String originPermitida = "http://localhost:4200";
     @Getter
     private final Seguranca seguranca = new Seguranca();
 
