@@ -22,11 +22,11 @@ public class RefreshTokenPreProcessorFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
 
-        if(req.getRequestURI().equalsIgnoreCase("/oauth/token")
-                && req.getParameter("grant_type").equals("refresh_token")
-                && req.getCookies() != null){
-            for (Cookie cookie: req.getCookies()){
-                if(cookie.getName().equals("refreshToken")){
+        if ("/oauth/token".equalsIgnoreCase(req.getRequestURI())
+                && "refresh_token".equals(req.getParameter("grant_type"))
+                && req.getCookies() != null) {
+            for (Cookie cookie : req.getCookies()) {
+                if (cookie.getName().equals("refreshToken")) {
                     String refreshToken = cookie.getValue();
                     req = new MyServletRequestWrapper(req, refreshToken);
                 }
