@@ -18,12 +18,12 @@ public class Mailer {
 
     public Mailer(JavaMailSender javaMailSender) { this.javaMailSender = javaMailSender; }
 
-    @EventListener
-    public void teste(ApplicationReadyEvent event) {
-        enviarEmail("pedroheinrique@gmail.com", Collections.singletonList("pedroheinrique@gmail.com"), "Testando",
-                "Olá!<br>Teste Ok.");
-        System.out.println("email enviado");
-    }
+//    @EventListener
+//    public void teste(ApplicationReadyEvent event) {
+//        enviarEmail("pedroheinrique@gmail.com", Collections.singletonList("pedroheinrique@gmail.com"), "Testando",
+//                "Olá!<br>Teste Ok.");
+//        System.out.println("email enviado");
+//    }
 
     private void enviarEmail(String remetente, List<String> destinatarios, String assunto, String mensagem) {
         try {
