@@ -11,10 +11,37 @@ public class AlgamoneyApiProperty {
     private final Seguranca seguranca = new Seguranca();
 
     @Getter
-    @Setter
     @SuppressWarnings("WeakerAccess")
     public static class Seguranca{
+
+        @Setter
+        private String jwtSigningKey;
+
+        @Setter
         private boolean enableHttps;
+
+        @Getter
+        private final FrontEnd frontEnd = new FrontEnd();
+
+        @Getter
+        private final Mobile mobile = new Mobile();
+
+        @Getter
+        @Setter
+        @SuppressWarnings("WeakerAccess")
+        public static class FrontEnd {
+            private String username;
+            private String password;
+            private String originAllowed;
+        }
+
+        @Getter
+        @Setter
+        @SuppressWarnings("WeakerAccess")
+        public static class Mobile {
+            private String username;
+            private String password;
+        }
     }
 
     @Getter

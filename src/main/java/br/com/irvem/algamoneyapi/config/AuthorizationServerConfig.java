@@ -1,12 +1,13 @@
 package br.com.irvem.algamoneyapi.config;
 
-import br.com.irvem.algamoneyapi.config.token.CustomTokenEnchancer;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.irvem.algamoneyapi.config.property.AlgamoneyApiProperty;
+import br.com.irvem.algamoneyapi.config.token.CustomTokenEnhancer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -24,24 +25,33 @@ import java.util.Arrays;
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
+    private final AlgamoneyApiProperty algamoneyApiProperty;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    public AuthorizationServerConfig(AuthenticationManager authenticationManager,
+                                     UserDetailsService userDetailsService,
+                                     AlgamoneyApiProperty algamoneyApiProperty,
+                                     BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+        this.algamoneyApiProperty = algamoneyApiProperty;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                    .withClient("angular")
-                    .secret("$2a$10$zzaOMiu1dWY8die2B9yCfO/Aq4RO3cZKPlMnj4NAzyDfN4vS82bbW") //@ngul@r0
+                    .withClient(algamoneyApiProperty.getSeguranca().getFrontEnd().getUsername()) //angular
+                    .secret(bCryptPasswordEncoder.encode(algamoneyApiProperty.getSeguranca().getFrontEnd().getPassword())) //@ngul@r0
                     .scopes("read","write")
                     .authorizedGrantTypes("password", "refresh_token")
                     .accessTokenValiditySeconds(1800)
                     .refreshTokenValiditySeconds(3600*24)
                 .and()
-                    .withClient("mobile")
-                    .secret("$2a$10$Wg.ZgDjqQZcSiuv9gffW3O1Oj1oPurOCuEi5HEgl2iqofnmkpFO4i") //m0b1l30
+                    .withClient(algamoneyApiProperty.getSeguranca().getMobile().getUsername()) //mobile
+                    .secret(bCryptPasswordEncoder.encode(algamoneyApiProperty.getSeguranca().getMobile().getPassword())) //m0b1l30
                     .scopes("read")
                     .authorizedGrantTypes("password", "refresh_token")
                     .accessTokenValiditySeconds(1800)
@@ -49,9 +59,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnchancer(), accessTokenConverter()));
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(), accessTokenConverter()));
 
         endpoints.tokenStore(tokenStore())
                 .tokenEnhancer(tokenEnhancerChain)
@@ -61,19 +71,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     @Bean
-    public TokenEnhancer tokenEnchancer() {
-        return new CustomTokenEnchancer();
-    }
+    public TokenEnhancer tokenEnhancer() { return new CustomTokenEnhancer(); }
 
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
-        accessTokenConverter.setSigningKey("algaworks");
+        accessTokenConverter.setSigningKey(algamoneyApiProperty.getSeguranca().getJwtSigningKey()); //algaworks
         return accessTokenConverter;
     }
 
     @Bean
-    public TokenStore tokenStore(){
-        return new JwtTokenStore(accessTokenConverter());
-    }
+    public TokenStore tokenStore(){ return new JwtTokenStore(accessTokenConverter()); }
 }

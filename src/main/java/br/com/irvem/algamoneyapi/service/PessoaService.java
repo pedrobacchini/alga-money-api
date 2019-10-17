@@ -4,7 +4,6 @@ import br.com.irvem.algamoneyapi.model.Pessoa;
 import br.com.irvem.algamoneyapi.repository.PessoaRepository;
 import br.com.irvem.algamoneyapi.repository.filter.PessoaFilter;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,10 +16,7 @@ public class PessoaService  {
 
     private PessoaRepository pessoaRepository;
 
-    @Autowired
-    public PessoaService(PessoaRepository pessoaRepository) {
-        this.pessoaRepository = pessoaRepository;
-    }
+    public PessoaService(PessoaRepository pessoaRepository) { this.pessoaRepository = pessoaRepository; }
 
     public Page<Pessoa> pesquisar(PessoaFilter pessoaFilter, Pageable pageable){
         return pessoaRepository.filtrar(pessoaFilter, pageable);

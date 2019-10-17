@@ -7,7 +7,6 @@ import br.com.irvem.algamoneyapi.repository.filter.LancamentoFilter;
 import br.com.irvem.algamoneyapi.repository.projection.ResumoLancamento;
 import br.com.irvem.algamoneyapi.service.LancamentoService;
 import br.com.irvem.algamoneyapi.service.exception.PessoaInexistenteOuInativaException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -18,10 +17,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -32,7 +31,6 @@ public class LancamentoResource {
     private LancamentoService lancamentoService;
     private MessageSource messageSource;
 
-    @Autowired
     public LancamentoResource(ApplicationEventPublisher publisher,
                               LancamentoService lancamentoService,
                               MessageSource messageSource) {
@@ -69,7 +67,7 @@ public class LancamentoResource {
     public ResponseEntity<Object> handlePessoaInexistenteOuInativaException(PessoaInexistenteOuInativaException ex){
         String mensagemUsuario = messageSource.getMessage("pessoa.inexistente-ou-inativa", null, LocaleContextHolder.getLocale());
         String mensagemDesenvolvedor = ex.toString();
-        List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
+        List<Erro> erros = Collections.singletonList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
         return ResponseEntity.badRequest().body(erros);
     }
 

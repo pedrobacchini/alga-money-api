@@ -4,7 +4,6 @@ import br.com.irvem.algamoneyapi.model.Pessoa;
 import br.com.irvem.algamoneyapi.model.Pessoa_;
 import br.com.irvem.algamoneyapi.repository.filter.PessoaFilter;
 import br.com.irvem.algamoneyapi.repository.util.PaginacaoUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -21,8 +20,9 @@ import java.util.List;
 
 public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
 
-    @Autowired
-    private EntityManager manager;
+    private final EntityManager manager;
+
+    public PessoaRepositoryImpl(EntityManager manager) { this.manager = manager; }
 
     @Override
     public Page<Pessoa> filtrar(PessoaFilter pessoaFilter, Pageable pageable) {
@@ -45,7 +45,7 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
         if(!StringUtils.isEmpty(pessoaFilter.getNome())){
             predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get(Pessoa_.nome)), "%"+pessoaFilter.getNome().toLowerCase()+"%"));
         }
-        return predicates.toArray(new Predicate[predicates.size()]);
+        return predicates.toArray(new Predicate[0]);
     }
 
     private Long total(PessoaFilter pessoaFilter) {

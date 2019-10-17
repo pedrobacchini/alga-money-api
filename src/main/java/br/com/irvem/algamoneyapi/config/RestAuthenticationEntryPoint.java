@@ -20,9 +20,7 @@ public final class RestAuthenticationEntryPoint implements AuthenticationEntryPo
 
     private final ObjectMapper mapper;
 
-    public RestAuthenticationEntryPoint(ObjectMapper mapper) {
-        this.mapper = mapper;
-    }
+    public RestAuthenticationEntryPoint(ObjectMapper mapper) { this.mapper = mapper; }
 
     @Override
     public void commence(final HttpServletRequest request, final HttpServletResponse response, final AuthenticationException authException) throws IOException {

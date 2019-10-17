@@ -4,7 +4,6 @@ import br.com.irvem.algamoneyapi.event.RecursoCriadoEvent;
 import br.com.irvem.algamoneyapi.model.Pessoa;
 import br.com.irvem.algamoneyapi.repository.filter.PessoaFilter;
 import br.com.irvem.algamoneyapi.service.PessoaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/pessoas")
@@ -24,7 +22,6 @@ public class PessoaResource {
     private PessoaService pessoaService;
     private ApplicationEventPublisher publisher;
 
-    @Autowired
     public PessoaResource(PessoaService pessoaService, ApplicationEventPublisher publisher) {
         this.pessoaService = pessoaService;
         this.publisher = publisher;

@@ -23,7 +23,6 @@ public class CategoriaResource {
     private CategoriaRepository categoriaRepository;
     private ApplicationEventPublisher publisher;
 
-    @Autowired
     public CategoriaResource(CategoriaRepository categoriaRepository, ApplicationEventPublisher publisher) {
         this.categoriaRepository = categoriaRepository;
         this.publisher = publisher;

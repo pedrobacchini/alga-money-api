@@ -1,7 +1,6 @@
 package br.com.irvem.algamoneyapi.token;
 
 import br.com.irvem.algamoneyapi.config.property.AlgamoneyApiProperty;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -18,6 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 
 /*
 Interceptar toda resposta que tem como corpo um token de acesso do tipo OAuth2AccessToken
@@ -27,12 +27,15 @@ remover o refresh token do body e colocar no cookie
 @ControllerAdvice
 public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2AccessToken> {
 
-    @Autowired
-    private AlgamoneyApiProperty algamoneyApiProperty;
+    private final AlgamoneyApiProperty algamoneyApiProperty;
+
+    public RefreshTokenPostProcessor(AlgamoneyApiProperty algamoneyApiProperty) {
+        this.algamoneyApiProperty = algamoneyApiProperty;
+    }
 
     @Override
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
-        return methodParameter.getMethod().getName().equals("postAccessToken");
+        return Objects.requireNonNull(methodParameter.getMethod()).getName().equals("postAccessToken");
     }
 
     @Override
@@ -47,20 +50,18 @@ public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2Acces
         DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) oAuth2AccessToken;
 
         String refresToken = oAuth2AccessToken.getRefreshToken().getValue();
-        adicionarRefreshTokenNoCookie(refresToken, req, resp);
-        removerRefreshTokenDoBody(token);
+        addRefreshTokenCookie(refresToken, req, resp);
+        removeRefreshTokenBody(token);
         return oAuth2AccessToken;
     }
 
-    private void removerRefreshTokenDoBody(DefaultOAuth2AccessToken token) {
-        token.setRefreshToken(null);
-    }
+    private void removeRefreshTokenBody(DefaultOAuth2AccessToken token) { token.setRefreshToken(null); }
 
-    private void adicionarRefreshTokenNoCookie(String refresToken, HttpServletRequest req, HttpServletResponse resp) {
+    private void addRefreshTokenCookie(String refresToken, HttpServletRequest req, HttpServletResponse resp) {
         Cookie refreshTokenCookie = new Cookie("refreshToken", refresToken);
         refreshTokenCookie.setHttpOnly(true);
         refreshTokenCookie.setSecure(algamoneyApiProperty.getSeguranca().isEnableHttps());
-        refreshTokenCookie.setPath(req.getContextPath()+"/oauth/token");
+        refreshTokenCookie.setPath(req.getContextPath() + "/oauth/token");
         refreshTokenCookie.setMaxAge(2592000);
         resp.addCookie(refreshTokenCookie);
     }

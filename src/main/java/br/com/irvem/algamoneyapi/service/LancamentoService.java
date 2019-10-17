@@ -8,7 +8,6 @@ import br.com.irvem.algamoneyapi.repository.filter.LancamentoFilter;
 import br.com.irvem.algamoneyapi.repository.projection.ResumoLancamento;
 import br.com.irvem.algamoneyapi.service.exception.PessoaInexistenteOuInativaException;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +22,6 @@ public class LancamentoService {
     private LancamentoRepository lancamentoRepository;
     private PessoaRepository pessoaRepository;
 
-    @Autowired
     public LancamentoService(LancamentoRepository lancamentoRepository, PessoaRepository pessoaRepository) {
         this.lancamentoRepository = lancamentoRepository;
         this.pessoaRepository = pessoaRepository;

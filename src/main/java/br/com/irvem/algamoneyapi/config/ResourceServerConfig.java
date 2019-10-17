@@ -21,12 +21,12 @@ import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecur
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-/*
- * Não necessita estar autenticado para executar requisição em '/categorias',
- * mas precisa para executar qualquer outra requisição.
- * API REST não criará sessão no servidor, ou seja, não manterá estado de nada.
- * Cross site desabilitado -> javascript injection
- */
+    /*
+     * Não necessita estar autenticado para executar requisição em '/categorias',
+     * mas precisa para executar qualquer outra requisição.
+     * API REST não criará sessão no servidor, ou seja, não manterá estado de nada.
+     * Cross site desabilitado -> javascript injection
+     */
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -34,16 +34,16 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/categorias").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .cors()
                 .and().csrf().disable();
     }
 
     @Override
-    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        resources.stateless(true);
-    }
+    public void configure(ResourceServerSecurityConfigurer resources) { resources.stateless(true); }
 
     @Bean
-    public MethodSecurityExpressionHandler createExpressionHandler(){
+    public MethodSecurityExpressionHandler createExpressionHandler() {
         return new OAuth2MethodSecurityExpressionHandler();
     }
 }

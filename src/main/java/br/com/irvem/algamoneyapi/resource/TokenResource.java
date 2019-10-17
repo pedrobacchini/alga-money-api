@@ -1,7 +1,6 @@
 package br.com.irvem.algamoneyapi.resource;
 
 import br.com.irvem.algamoneyapi.config.property.AlgamoneyApiProperty;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/token")
 public class TokenResource {
 
-    @Autowired
-    private AlgamoneyApiProperty algamoneyApiProperty;
+    private final AlgamoneyApiProperty algamoneyApiProperty;
+
+    public TokenResource(AlgamoneyApiProperty algamoneyApiProperty) {
+        this.algamoneyApiProperty = algamoneyApiProperty;
+    }
 
     @DeleteMapping("/revoke")
-    public void revoke(HttpServletRequest request, HttpServletResponse response){
+    public void revoke(HttpServletRequest request, HttpServletResponse response) {
         Cookie cookie = new Cookie("refreshToken", null);
         cookie.setHttpOnly(true);
         cookie.setSecure(algamoneyApiProperty.getSeguranca().isEnableHttps());
