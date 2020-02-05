@@ -2,9 +2,11 @@ package br.com.irvem.algamoneyapi.config;
 
 import br.com.irvem.algamoneyapi.config.property.AlgamoneyApiProperty;
 import br.com.irvem.algamoneyapi.config.token.CustomTokenEnhancer;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,29 +18,21 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import java.util.Arrays;
 
 @Profile("oauth-security")
 @Configuration
 @EnableAuthorizationServer
+@RequiredArgsConstructor
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final AlgamoneyApiProperty algamoneyApiProperty;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    public AuthorizationServerConfig(AuthenticationManager authenticationManager,
-                                     UserDetailsService userDetailsService,
-                                     AlgamoneyApiProperty algamoneyApiProperty,
-                                     BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.authenticationManager = authenticationManager;
-        this.userDetailsService = userDetailsService;
-        this.algamoneyApiProperty = algamoneyApiProperty;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
+    private final RedisConnectionFactory redisConnectionFactory;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -81,5 +75,5 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     @Bean
-    public TokenStore tokenStore(){ return new JwtTokenStore(accessTokenConverter()); }
+    public TokenStore tokenStore(){ return new RedisTokenStore(redisConnectionFactory); }
 }

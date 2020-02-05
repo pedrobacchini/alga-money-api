@@ -5,9 +5,12 @@ import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import java.io.Serializable;
 import java.util.Collection;
 
-public class UsuarioSistema extends User {
+public class UsuarioSistema extends User implements Serializable {
+
+    private static final long serialVersionUID = 4755037574298462158L;
 
     @Getter
     private Usuario usuario;

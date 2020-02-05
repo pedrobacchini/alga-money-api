@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,9 @@ import java.util.List;
 @ToString
 @Table(name = "usuarios")
 @EqualsAndHashCode(of = {"id"})
-public class Usuario {
+public class Usuario implements Serializable {
+
+    private static final long serialVersionUID = -1240903256346199726L;
 
     @Id
     private Long id;

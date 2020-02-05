@@ -7,3 +7,10 @@ services:
       MYSQL_ROOT_PASSWORD: "admin"
     ports:
       - "33066:3306"
+    volumes:
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+  redis:
+    image: redis
+    command: redis-server --requirepass admin
+    ports:
+      - "6379:6379"
