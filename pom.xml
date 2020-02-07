@@ -24,7 +24,7 @@
         <java.version>1.8</java.version>
 
         <!--Para funcionamento do oauth 2 e jwt no spring boot 2 foi necessario colocar as versao explicitamente-->
-        <spring-security-oauth2.version>2.3.6.RELEASE</spring-security-oauth2.version>
+        <spring-security-oauth2.version>2.4.0.RELEASE</spring-security-oauth2.version>
         <spring-security-jwt.version>1.0.9.RELEASE</spring-security-jwt.version>
     </properties>
 
