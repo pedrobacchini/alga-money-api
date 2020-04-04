@@ -34,7 +34,7 @@ public class LancamentoService {
 
 //    public Lancamento buscarPeloID(Long id) { return buscarLancamentoPeloID(id); }
 
-    public Lancamento buscarPeloID(Long id){
+    public Lancamento buscarPeloID(Long id) {
         Optional<Lancamento> lancamentoSalvo = lancamentoRepository.findById(id);
         return lancamentoSalvo.orElseThrow(() -> new EmptyResultDataAccessException(1));
     }
@@ -48,21 +48,21 @@ public class LancamentoService {
 
     public Lancamento atualizar(Long id, Lancamento lancamento) {
         Lancamento lancamentoSalvo = buscarPeloID(id);
-        if(!lancamento.getPessoa().equals(lancamentoSalvo.getPessoa()))
+        if (!lancamento.getPessoa().equals(lancamentoSalvo.getPessoa()))
             validarPessoa(lancamento);
 
         BeanUtils.copyProperties(lancamento, lancamentoSalvo, "id");
         return lancamentoRepository.save(lancamentoSalvo);
     }
 
-    private void validarPessoa(Lancamento lancamento){
+    private void validarPessoa(Lancamento lancamento) {
         try {
-            if(lancamento.getPessoa().getId() != null) {
+            if (lancamento.getPessoa().getId() != null) {
                 Pessoa pessoa = pessoaRepository.getOne(lancamento.getPessoa().getId());
-                if(pessoa.isInativo())
+                if (pessoa.isInativo())
                     throw new PessoaInexistenteOuInativaException();
             }
-        } catch (EntityNotFoundException ex){
+        } catch (EntityNotFoundException ex) {
             throw new PessoaInexistenteOuInativaException();
         }
     }

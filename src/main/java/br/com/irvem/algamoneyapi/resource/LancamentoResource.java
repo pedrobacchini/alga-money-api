@@ -34,30 +34,30 @@ public class LancamentoResource {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
-    public Page<Lancamento> pesquisar(LancamentoFilter lancamentoFilter, Pageable pageable){
+    public Page<Lancamento> pesquisar(LancamentoFilter lancamentoFilter, Pageable pageable) {
         return lancamentoService.pesquisar(lancamentoFilter, pageable);
     }
 
     @GetMapping(params = "resumo")
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
-    public Page<ResumoLancamento> resumir(LancamentoFilter lancamentoFilter, Pageable pageable){
+    public Page<ResumoLancamento> resumir(LancamentoFilter lancamentoFilter, Pageable pageable) {
         return lancamentoService.resumir(lancamentoFilter, pageable);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
-    public Lancamento buscarPeloID(@PathVariable Long id){ return lancamentoService.buscarPeloID(id); }
+    public Lancamento buscarPeloID(@PathVariable Long id) { return lancamentoService.buscarPeloID(id); }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
-    public ResponseEntity<Lancamento> criar(@Valid @RequestBody Lancamento lancamento, HttpServletResponse response){
+    public ResponseEntity<Lancamento> criar(@Valid @RequestBody Lancamento lancamento, HttpServletResponse response) {
         Lancamento lacamentoSalvo = lancamentoService.salvar(lancamento);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, lacamentoSalvo.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(lacamentoSalvo);
     }
 
     @ExceptionHandler({PessoaInexistenteOuInativaException.class})
-    public ResponseEntity<Object> handlePessoaInexistenteOuInativaException(PessoaInexistenteOuInativaException ex){
+    public ResponseEntity<Object> handlePessoaInexistenteOuInativaException(PessoaInexistenteOuInativaException ex) {
         String mensagemUsuario = messageSource.getMessage("pessoa.inexistente-ou-inativa", null, LocaleContextHolder.getLocale());
         String mensagemDesenvolvedor = ex.toString();
         List<Erro> erros = Collections.singletonList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
@@ -67,15 +67,15 @@ public class LancamentoResource {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_REMOVER_LANCAMENTO') and #oauth2.hasScope('write')")
-    public void remover(@PathVariable Long id){ lancamentoService.remover(id); }
+    public void remover(@PathVariable Long id) { lancamentoService.remover(id); }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
-    public ResponseEntity<Lancamento> atualizar(@PathVariable Long id, @Valid @RequestBody Lancamento lancamento){
+    public ResponseEntity<Lancamento> atualizar(@PathVariable Long id, @Valid @RequestBody Lancamento lancamento) {
         try {
             Lancamento lancamentoSalvo = lancamentoService.atualizar(id, lancamento);
             return ResponseEntity.ok(lancamentoSalvo);
-        }catch (IllegalArgumentException ex){
+        } catch (IllegalArgumentException ex) {
             return ResponseEntity.notFound().build();
         }
     }

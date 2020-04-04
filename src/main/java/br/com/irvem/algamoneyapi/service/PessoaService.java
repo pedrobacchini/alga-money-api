@@ -14,11 +14,11 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class PessoaService  {
+public class PessoaService {
 
     private final PessoaRepository pessoaRepository;
 
-    public Page<Pessoa> pesquisar(PessoaFilter pessoaFilter, Pageable pageable){
+    public Page<Pessoa> pesquisar(PessoaFilter pessoaFilter, Pageable pageable) {
         return pessoaRepository.filtrar(pessoaFilter, pageable);
     }
 
@@ -35,7 +35,7 @@ public class PessoaService  {
         pessoaRepository.deleteById(id);
     }
 
-    public Pessoa atualizar(Long id, Pessoa pessoa){
+    public Pessoa atualizar(Long id, Pessoa pessoa) {
         Pessoa pessoaSalva = buscarPeloID(id);
         BeanUtils.copyProperties(pessoa, pessoaSalva, "id");
         return pessoaRepository.save(pessoaSalva);

@@ -32,7 +32,7 @@ public class Mailer {
             mimeMessageHelper.setSubject(assunto);
             mimeMessageHelper.setText(mensagem, true);
             javaMailSender.send(mimeMessage);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             throw new RuntimeException("Problemas com o envio de e-mail!", e);
         }
     }

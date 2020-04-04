@@ -19,7 +19,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
         Map<String, Object> addInfo = new HashMap<>();
         addInfo.put("nome", usuarioSistema.getNome());
 
-        ((DefaultOAuth2AccessToken)oAuth2AccessToken).setAdditionalInformation(addInfo);
+        ((DefaultOAuth2AccessToken) oAuth2AccessToken).setAdditionalInformation(addInfo);
         return oAuth2AccessToken;
     }
 }

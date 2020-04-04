@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <body style="font-family: Arial,serif; font-size: 14px;">
 
@@ -24,10 +24,10 @@
         <td th:text="${lancamento.tipo.descricao}">Receita</td>
         <td th:text="${lancamento.pessoa.nome}">João Silva</td>
         <td th:text="${lancamento.descricao}">Salário mensal</td>
-        <td th:text="${#temporals.format(lancamento.dataVencimento, 'dd/MM/yyyy')}" style="text-align: center">
+        <td style="text-align: center" th:text="${#temporals.format(lancamento.dataVencimento, 'dd/MM/yyyy')}">
             10/06/2017
         </td>
-        <td th:text="${#numbers.formatDecimal(lancamento.valor, 0, 'POINT', 2, 'COMMA')}" style="text-align: right">R$
+        <td style="text-align: right" th:text="${#numbers.formatDecimal(lancamento.valor, 0, 'POINT', 2, 'COMMA')}">R$
             10.000,00
         </td>
     </tr>

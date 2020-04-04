@@ -42,8 +42,8 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
 
     private Predicate[] criarRestricoes(PessoaFilter pessoaFilter, CriteriaBuilder criteriaBuilder, Root<Pessoa> root) {
         List<Predicate> predicates = new ArrayList<>();
-        if(!StringUtils.isEmpty(pessoaFilter.getNome())){
-            predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get(Pessoa_.nome)), "%"+pessoaFilter.getNome().toLowerCase()+"%"));
+        if (!StringUtils.isEmpty(pessoaFilter.getNome())) {
+            predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get(Pessoa_.nome)), "%" + pessoaFilter.getNome().toLowerCase() + "%"));
         }
         return predicates.toArray(new Predicate[0]);
     }

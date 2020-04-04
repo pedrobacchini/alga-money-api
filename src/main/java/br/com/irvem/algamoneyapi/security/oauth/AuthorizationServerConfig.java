@@ -1,8 +1,8 @@
 package br.com.irvem.algamoneyapi.security.oauth;
 
 import br.com.irvem.algamoneyapi.config.AlgamoneyApiProperty;
-import br.com.irvem.algamoneyapi.security.oauth.token.CustomTokenEnhancer;
 import br.com.irvem.algamoneyapi.security.oauth.token.CustomRedisTokenStore;
+import br.com.irvem.algamoneyapi.security.oauth.token.CustomTokenEnhancer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,19 +38,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                    .withClient(algamoneyApiProperty.getSeguranca().getFrontEnd().getUsername()) //angular
-                    .secret(bCryptPasswordEncoder.encode(algamoneyApiProperty.getSeguranca().getFrontEnd().getPassword())) //@ngul@r0
-                    .scopes("read","write")
-                    .authorizedGrantTypes("password", "refresh_token")
-                    .accessTokenValiditySeconds(1800)
-                    .refreshTokenValiditySeconds(3600*24)
+                .withClient(algamoneyApiProperty.getSeguranca().getFrontEnd().getUsername()) //angular
+                .secret(bCryptPasswordEncoder.encode(algamoneyApiProperty.getSeguranca().getFrontEnd().getPassword())) //@ngul@r0
+                .scopes("read", "write")
+                .authorizedGrantTypes("password", "refresh_token")
+                .accessTokenValiditySeconds(1800)
+                .refreshTokenValiditySeconds(3600 * 24)
                 .and()
-                    .withClient(algamoneyApiProperty.getSeguranca().getMobile().getUsername()) //mobile
-                    .secret(bCryptPasswordEncoder.encode(algamoneyApiProperty.getSeguranca().getMobile().getPassword())) //m0b1l30
-                    .scopes("read")
-                    .authorizedGrantTypes("password", "refresh_token")
-                    .accessTokenValiditySeconds(1800)
-                    .refreshTokenValiditySeconds(3600*24);
+                .withClient(algamoneyApiProperty.getSeguranca().getMobile().getUsername()) //mobile
+                .secret(bCryptPasswordEncoder.encode(algamoneyApiProperty.getSeguranca().getMobile().getPassword())) //m0b1l30
+                .scopes("read")
+                .authorizedGrantTypes("password", "refresh_token")
+                .accessTokenValiditySeconds(1800)
+                .refreshTokenValiditySeconds(3600 * 24);
     }
 
     @Override
@@ -76,5 +76,5 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     @Bean
-    public TokenStore tokenStore(){ return new CustomRedisTokenStore(redisConnectionFactory); }
+    public TokenStore tokenStore() { return new CustomRedisTokenStore(redisConnectionFactory); }
 }

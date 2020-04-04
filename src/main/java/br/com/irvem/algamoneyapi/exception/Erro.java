@@ -2,7 +2,8 @@ package br.com.irvem.algamoneyapi.exception;
 
 import lombok.Getter;
 
-public class Erro{
+public class Erro {
+
     @Getter
     private final String mensagemUsuario;
     @Getter

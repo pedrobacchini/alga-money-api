@@ -50,7 +50,7 @@ public class RefreshTokenPreProcessorFilter implements Filter {
         @Override
         public Map<String, String[]> getParameterMap() {
             ParameterMap<String, String[]> map = new ParameterMap<>(getRequest().getParameterMap());
-            map.put("refresh_token", new String[]{ refresh_token });
+            map.put("refresh_token", new String[]{refresh_token});
             map.setLocked(true);
             return map;
         }

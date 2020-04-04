@@ -26,20 +26,20 @@ public class CategoriaResource {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA') and #oauth2.hasScope('read')")
-    public List<Categoria> listar(){
+    public List<Categoria> listar() {
         return categoriaRepository.findAll();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA') and #oauth2.hasScope('read')")
-    public Categoria buscarPeloID(@PathVariable Long id){
+    public Categoria buscarPeloID(@PathVariable Long id) {
         Optional<Categoria> categoria = categoriaRepository.findById(id);
         return categoria.orElseThrow(() -> new EmptyResultDataAccessException(1));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_CADASTRAR_CATEGORIA') and #oauth2.hasScope('write')")
-    public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria, HttpServletResponse response){
+    public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria, HttpServletResponse response) {
         Categoria categoriaSalva = categoriaRepository.save(categoria);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, categoriaSalva.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaSalva);
