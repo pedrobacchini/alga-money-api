@@ -2,6 +2,7 @@ package br.com.irvem.algamoneyapi.security.oauth;
 
 import br.com.irvem.algamoneyapi.config.AlgamoneyApiProperty;
 import br.com.irvem.algamoneyapi.security.oauth.token.CustomTokenEnhancer;
+import br.com.irvem.algamoneyapi.security.oauth.token.CustomRedisTokenStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +19,6 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import java.util.Arrays;
 
@@ -76,5 +76,5 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     @Bean
-    public TokenStore tokenStore(){ return new RedisTokenStore(redisConnectionFactory); }
+    public TokenStore tokenStore(){ return new CustomRedisTokenStore(redisConnectionFactory); }
 }
