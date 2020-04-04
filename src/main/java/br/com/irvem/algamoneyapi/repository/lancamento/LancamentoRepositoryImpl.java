@@ -7,22 +7,25 @@ import br.com.irvem.algamoneyapi.model.Pessoa_;
 import br.com.irvem.algamoneyapi.repository.filter.LancamentoFilter;
 import br.com.irvem.algamoneyapi.repository.projection.ResumoLancamento;
 import br.com.irvem.algamoneyapi.repository.util.PaginacaoUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 
-    @PersistenceContext
-    private EntityManager manager;
+    private final EntityManager manager;
 
     @Override
     public Page<Lancamento> filtrar(LancamentoFilter lancamentoFilter, Pageable pageable) {
@@ -80,7 +83,7 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
         if(lancamentoFilter.getDataVencimentoAte()!=null){
             predicates.add(builder.lessThanOrEqualTo(root.get(Lancamento_.dataVencimento), lancamentoFilter.getDataVencimentoAte()));
         }
-        return predicates.toArray(new Predicate[predicates.size()]);
+        return predicates.toArray(new Predicate[0]);
     }
 
     private Long total(LancamentoFilter lancamentoFilter) {

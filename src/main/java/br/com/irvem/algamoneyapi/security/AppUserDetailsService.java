@@ -2,6 +2,7 @@ package br.com.irvem.algamoneyapi.security;
 
 import br.com.irvem.algamoneyapi.model.Usuario;
 import br.com.irvem.algamoneyapi.repository.UsuarioRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,11 +16,10 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class AppUserDetailsService implements UserDetailsService {
 
     private final UsuarioRepository usuarioRepository;
-
-    public AppUserDetailsService(UsuarioRepository usuarioRepository) { this.usuarioRepository = usuarioRepository; }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

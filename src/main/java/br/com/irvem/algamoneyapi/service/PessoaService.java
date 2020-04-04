@@ -3,6 +3,7 @@ package br.com.irvem.algamoneyapi.service;
 import br.com.irvem.algamoneyapi.model.Pessoa;
 import br.com.irvem.algamoneyapi.repository.PessoaRepository;
 import br.com.irvem.algamoneyapi.repository.filter.PessoaFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -12,11 +13,10 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class PessoaService  {
 
-    private PessoaRepository pessoaRepository;
-
-    public PessoaService(PessoaRepository pessoaRepository) { this.pessoaRepository = pessoaRepository; }
+    private final PessoaRepository pessoaRepository;
 
     public Page<Pessoa> pesquisar(PessoaFilter pessoaFilter, Pageable pageable){
         return pessoaRepository.filtrar(pessoaFilter, pageable);

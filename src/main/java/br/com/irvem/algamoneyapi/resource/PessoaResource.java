@@ -4,6 +4,7 @@ import br.com.irvem.algamoneyapi.event.RecursoCriadoEvent;
 import br.com.irvem.algamoneyapi.model.Pessoa;
 import br.com.irvem.algamoneyapi.repository.filter.PessoaFilter;
 import br.com.irvem.algamoneyapi.service.PessoaService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,16 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/pessoas")
 public class PessoaResource {
 
-    private PessoaService pessoaService;
-    private ApplicationEventPublisher publisher;
-
-    public PessoaResource(PessoaService pessoaService, ApplicationEventPublisher publisher) {
-        this.pessoaService = pessoaService;
-        this.publisher = publisher;
-    }
+    private final PessoaService pessoaService;
+    private final ApplicationEventPublisher publisher;
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")

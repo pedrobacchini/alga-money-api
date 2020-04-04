@@ -4,9 +4,9 @@ import lombok.Getter;
 
 public class Erro{
     @Getter
-    private String mensagemUsuario;
+    private final String mensagemUsuario;
     @Getter
-    private String mensagemDesenvolvedor;
+    private final String mensagemDesenvolvedor;
 
     public Erro(String mensagemUsuario, String mensagemDesenvolvedor) {
         this.mensagemUsuario = mensagemUsuario;

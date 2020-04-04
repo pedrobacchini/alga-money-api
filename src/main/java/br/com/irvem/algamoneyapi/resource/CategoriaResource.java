@@ -3,7 +3,7 @@ package br.com.irvem.algamoneyapi.resource;
 import br.com.irvem.algamoneyapi.event.RecursoCriadoEvent;
 import br.com.irvem.algamoneyapi.model.Categoria;
 import br.com.irvem.algamoneyapi.repository.CategoriaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -17,16 +17,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/categorias")
 public class CategoriaResource {
 
-    private CategoriaRepository categoriaRepository;
-    private ApplicationEventPublisher publisher;
-
-    public CategoriaResource(CategoriaRepository categoriaRepository, ApplicationEventPublisher publisher) {
-        this.categoriaRepository = categoriaRepository;
-        this.publisher = publisher;
-    }
+    private final CategoriaRepository categoriaRepository;
+    private final ApplicationEventPublisher publisher;
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA') and #oauth2.hasScope('read')")

@@ -2,6 +2,7 @@ package br.com.irvem.algamoneyapi.resource;
 
 import br.com.irvem.algamoneyapi.config.AlgamoneyApiProperty;
 import br.com.irvem.algamoneyapi.security.UsuarioSistema;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,14 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/token")
 public class TokenResource {
 
     private final AlgamoneyApiProperty algamoneyApiProperty;
-
-    public TokenResource(AlgamoneyApiProperty algamoneyApiProperty) {
-        this.algamoneyApiProperty = algamoneyApiProperty;
-    }
 
     @DeleteMapping("/revoke")
     public void revoke(HttpServletRequest request, HttpServletResponse response) {

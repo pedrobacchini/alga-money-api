@@ -1,22 +1,19 @@
 package br.com.irvem.algamoneyapi.mail;
 
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
+import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.util.Collections;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class Mailer {
 
     private final JavaMailSender javaMailSender;
-
-    public Mailer(JavaMailSender javaMailSender) { this.javaMailSender = javaMailSender; }
 
 //    @EventListener
 //    public void teste(ApplicationReadyEvent event) {
@@ -31,7 +28,7 @@ public class Mailer {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "UTF-8");
 
             mimeMessageHelper.setFrom(remetente);
-            mimeMessageHelper.setTo(destinatarios.toArray(new String[destinatarios.size()]));
+            mimeMessageHelper.setTo(destinatarios.toArray(new String[0]));
             mimeMessageHelper.setSubject(assunto);
             mimeMessageHelper.setText(mensagem, true);
             javaMailSender.send(mimeMessage);

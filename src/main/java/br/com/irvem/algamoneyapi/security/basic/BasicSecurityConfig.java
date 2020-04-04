@@ -1,5 +1,6 @@
 package br.com.irvem.algamoneyapi.security.basic;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,19 +12,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Profile("basic-security")
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
     private final RestAuthenticationEntryPoint authenticationEntryPoint;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    public BasicSecurityConfig(UserDetailsService userDetailsService,
-                               RestAuthenticationEntryPoint authenticationEntryPoint,
-                               BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userDetailsService = userDetailsService;
-        this.authenticationEntryPoint = authenticationEntryPoint;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

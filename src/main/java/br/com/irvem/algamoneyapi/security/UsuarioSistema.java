@@ -10,7 +10,7 @@ import java.util.Collection;
 @Getter
 public class UsuarioSistema extends User {
 
-    private String nome;
+    private final String nome;
 
     public UsuarioSistema(Usuario usuario, Collection<? extends GrantedAuthority> authorities) {
         super(usuario.getEmail(), usuario.getSenha(), authorities);

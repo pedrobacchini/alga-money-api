@@ -7,6 +7,7 @@ import br.com.irvem.algamoneyapi.repository.filter.LancamentoFilter;
 import br.com.irvem.algamoneyapi.repository.projection.ResumoLancamento;
 import br.com.irvem.algamoneyapi.service.LancamentoService;
 import br.com.irvem.algamoneyapi.service.exception.PessoaInexistenteOuInativaException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -19,25 +20,17 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/lancamentos")
 public class LancamentoResource {
 
-    private ApplicationEventPublisher publisher;
-    private LancamentoService lancamentoService;
-    private MessageSource messageSource;
-
-    public LancamentoResource(ApplicationEventPublisher publisher,
-                              LancamentoService lancamentoService,
-                              MessageSource messageSource) {
-        this.publisher = publisher;
-        this.lancamentoService = lancamentoService;
-        this.messageSource = messageSource;
-    }
+    private final ApplicationEventPublisher publisher;
+    private final LancamentoService lancamentoService;
+    private final MessageSource messageSource;
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")

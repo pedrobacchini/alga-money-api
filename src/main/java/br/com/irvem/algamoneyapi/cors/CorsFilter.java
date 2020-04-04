@@ -1,6 +1,7 @@
 package br.com.irvem.algamoneyapi.cors;
 
 import br.com.irvem.algamoneyapi.config.AlgamoneyApiProperty;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -11,12 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
 
     private final AlgamoneyApiProperty algamoneyApiProperty;
-
-    public CorsFilter(AlgamoneyApiProperty algamoneyApiProperty) { this.algamoneyApiProperty = algamoneyApiProperty; }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

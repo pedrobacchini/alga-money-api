@@ -1,6 +1,7 @@
 package br.com.irvem.algamoneyapi.security.oauth.token;
 
 import br.com.irvem.algamoneyapi.config.AlgamoneyApiProperty;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -26,13 +27,10 @@ remover o refresh token do body e colocar no cookie
 @SuppressWarnings("deprecation")
 @Profile("oauth-security")
 @ControllerAdvice
+@RequiredArgsConstructor
 public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2AccessToken> {
 
     private final AlgamoneyApiProperty algamoneyApiProperty;
-
-    public RefreshTokenPostProcessor(AlgamoneyApiProperty algamoneyApiProperty) {
-        this.algamoneyApiProperty = algamoneyApiProperty;
-    }
 
     @Override
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {

@@ -4,6 +4,7 @@ import br.com.irvem.algamoneyapi.model.Pessoa;
 import br.com.irvem.algamoneyapi.model.Pessoa_;
 import br.com.irvem.algamoneyapi.repository.filter.PessoaFilter;
 import br.com.irvem.algamoneyapi.repository.util.PaginacaoUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -18,11 +19,10 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
 
     private final EntityManager manager;
-
-    public PessoaRepositoryImpl(EntityManager manager) { this.manager = manager; }
 
     @Override
     public Page<Pessoa> filtrar(PessoaFilter pessoaFilter, Pageable pageable) {

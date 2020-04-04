@@ -19,7 +19,9 @@ import java.util.Map;
 public class RefreshTokenPreProcessorFilter implements Filter {
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest,
+                         ServletResponse servletResponse,
+                         FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
 
         if ("/oauth/token".equalsIgnoreCase(req.getRequestURI())
@@ -36,19 +38,9 @@ public class RefreshTokenPreProcessorFilter implements Filter {
         filterChain.doFilter(req, servletResponse);
     }
 
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
-
-    @Override
-    public void destroy() {
-
-    }
-
     static class MyServletRequestWrapper extends HttpServletRequestWrapper {
 
-        private String refresh_token;
+        private final String refresh_token;
 
         public MyServletRequestWrapper(HttpServletRequest request, String refresh_token) {
             super(request);

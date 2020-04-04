@@ -9,11 +9,10 @@
 //import java.util.Properties;
 //
 //@Configuration
+//@RequiredArgsConstructor
 //public class MailConfig {
 //
 //    private final AlgamoneyApiProperty algamoneyApiProperty;
-//
-//    public MailConfig(AlgamoneyApiProperty algamoneyApiProperty) { this.algamoneyApiProperty = algamoneyApiProperty; }
 //
 //    @Bean
 //    public JavaMailSender javaMailSender() {

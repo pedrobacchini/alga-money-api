@@ -1,5 +1,6 @@
 package br.com.irvem.algamoneyapi.exception;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -18,16 +19,14 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 @ControllerAdvice
+@RequiredArgsConstructor
 public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final MessageSource messageSource;
-
-    public AlgamoneyExceptionHandler(MessageSource messageSource) { this.messageSource = messageSource; }
 
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
