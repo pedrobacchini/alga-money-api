@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("deprecation")
 public class CustomTokenEnhancer implements TokenEnhancer {
 
     @Override

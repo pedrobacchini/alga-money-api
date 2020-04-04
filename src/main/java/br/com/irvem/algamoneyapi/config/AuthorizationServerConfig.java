@@ -22,6 +22,7 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 
 import java.util.Arrays;
 
+@SuppressWarnings("deprecation")
 @Profile("oauth-security")
 @Configuration
 @EnableAuthorizationServer

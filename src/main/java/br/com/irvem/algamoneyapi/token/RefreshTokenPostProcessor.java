@@ -23,6 +23,7 @@ import java.util.Objects;
 Interceptar toda resposta que tem como corpo um token de acesso do tipo OAuth2AccessToken
 remover o refresh token do body e colocar no cookie
  */
+@SuppressWarnings("deprecation")
 @Profile("oauth-security")
 @ControllerAdvice
 public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2AccessToken> {
