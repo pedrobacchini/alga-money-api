@@ -1,4 +1,4 @@
-package br.com.irvem.algamoneyapi.config.token;
+package br.com.irvem.algamoneyapi.security.oauth.token;
 
 import br.com.irvem.algamoneyapi.security.UsuarioSistema;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;

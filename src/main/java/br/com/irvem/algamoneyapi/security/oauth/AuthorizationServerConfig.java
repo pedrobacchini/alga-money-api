@@ -1,7 +1,7 @@
-package br.com.irvem.algamoneyapi.config;
+package br.com.irvem.algamoneyapi.security.oauth;
 
-import br.com.irvem.algamoneyapi.config.property.AlgamoneyApiProperty;
-import br.com.irvem.algamoneyapi.config.token.CustomTokenEnhancer;
+import br.com.irvem.algamoneyapi.config.AlgamoneyApiProperty;
+import br.com.irvem.algamoneyapi.security.oauth.token.CustomTokenEnhancer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

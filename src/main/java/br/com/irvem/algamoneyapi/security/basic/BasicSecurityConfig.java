@@ -1,4 +1,4 @@
-package br.com.irvem.algamoneyapi.config;
+package br.com.irvem.algamoneyapi.security.basic;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

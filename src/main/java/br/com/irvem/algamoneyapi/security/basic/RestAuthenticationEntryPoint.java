@@ -1,4 +1,4 @@
-package br.com.irvem.algamoneyapi.config;
+package br.com.irvem.algamoneyapi.security.basic;
 
 import br.com.irvem.algamoneyapi.exception.Erro;
 import com.fasterxml.jackson.databind.ObjectMapper;

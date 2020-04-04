@@ -1,6 +1,6 @@
 package br.com.irvem.algamoneyapi.cors;
 
-import br.com.irvem.algamoneyapi.config.property.AlgamoneyApiProperty;
+import br.com.irvem.algamoneyapi.config.AlgamoneyApiProperty;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;

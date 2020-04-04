@@ -1,4 +1,4 @@
-package br.com.irvem.algamoneyapi.token;
+package br.com.irvem.algamoneyapi.security.oauth.token;
 
 import org.apache.catalina.util.ParameterMap;
 import org.springframework.context.annotation.Profile;

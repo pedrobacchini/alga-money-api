@@ -1,6 +1,6 @@
 //package br.com.irvem.algamoneyapi.config;
 //
-//import br.com.irvem.algamoneyapi.config.property.AlgamoneyApiProperty;
+//import br.com.irvem.algamoneyapi.config.AlgamoneyApiProperty;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.mail.javamail.JavaMailSender;

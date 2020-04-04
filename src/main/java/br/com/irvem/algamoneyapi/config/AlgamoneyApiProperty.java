@@ -1,4 +1,4 @@
-package br.com.irvem.algamoneyapi.config.property;
+package br.com.irvem.algamoneyapi.config;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package br.com.irvem.algamoneyapi.resource;
 
-import br.com.irvem.algamoneyapi.config.property.AlgamoneyApiProperty;
+import br.com.irvem.algamoneyapi.config.AlgamoneyApiProperty;
 import br.com.irvem.algamoneyapi.security.UsuarioSistema;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;

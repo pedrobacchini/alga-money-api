@@ -1,6 +1,6 @@
-package br.com.irvem.algamoneyapi.token;
+package br.com.irvem.algamoneyapi.security.oauth.token;
 
-import br.com.irvem.algamoneyapi.config.property.AlgamoneyApiProperty;
+import br.com.irvem.algamoneyapi.config.AlgamoneyApiProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;

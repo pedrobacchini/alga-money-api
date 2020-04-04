@@ -1,6 +1,6 @@
 package br.com.irvem.algamoneyapi;
 
-import br.com.irvem.algamoneyapi.config.property.AlgamoneyApiProperty;
+import br.com.irvem.algamoneyapi.config.AlgamoneyApiProperty;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

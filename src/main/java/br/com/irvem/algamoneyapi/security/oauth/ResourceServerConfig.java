@@ -1,4 +1,4 @@
-package br.com.irvem.algamoneyapi.config;
+package br.com.irvem.algamoneyapi.security.oauth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
