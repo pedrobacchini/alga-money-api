@@ -1,8 +1,8 @@
 CREATE TABLE categorias
 (
-    id   BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+    id   BIGINT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50) NOT NULL
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+) Engine=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 INSERT INTO categorias(nome)
 values ('Lazer');

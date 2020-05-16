@@ -1,0 +1,53 @@
+server:
+  port: 7979
+spring:
+  profiles:
+    active: oauth-security
+  datasource:
+    url: jdbc:mysql://localhost:33066/algamoney?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    tomcat:
+      validation-query: SELECT 1
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    show-sql: false
+    hibernate:
+#      ddl-auto: create #para fazer o hibernate salvar as tabelas automaticamente
+      ddl-auto: validate #para fazer o hibernate apenas validar as tabelas
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${USERNAME_EMAIL}
+    password: ${PASSWORD_EMAIL}
+    properties:
+      mail:
+        smtp:
+          oauth: true
+          starttls:
+            enable: true
+  data:
+    redis:
+      repositories:
+        enabled: false
+  redis:
+    host: localhost
+    password: admin
+
+algamoney:
+  seguranca:
+    front-end:
+      username: angular
+      password: '@ngul@r0'
+      origin-allowed: http://localhost:4300
+    mobile:
+      username: mobile
+      password: m0b1l30
+    jwt-signing-key: algaworks
+

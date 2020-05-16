@@ -1,6 +1,6 @@
 CREATE TABLE pessoas
 (
-    id          BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+    id          BIGINT PRIMARY KEY AUTO_INCREMENT,
     nome        VARCHAR(50) NOT NULL,
     logradouro  VARCHAR(50),
     numero      VARCHAR(50),
@@ -10,7 +10,7 @@ CREATE TABLE pessoas
     cidade      VARCHAR(50),
     estado      VARCHAR(50),
     ativo       bit
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+) Engine=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 INSERT INTO pessoas (nome, logradouro, numero, complemento, bairro, cep, cidade, estado, ativo)
 values ('João Silva', 'Rua do Abacaxi', '10', null, 'Brasil', '38.400-121', 'Uberlândia', 'MG', true);

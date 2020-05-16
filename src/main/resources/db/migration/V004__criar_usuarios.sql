@@ -1,25 +1,25 @@
 CREATE TABLE usuarios
 (
-    id    BIGINT(20) PRIMARY KEY,
+    id    BIGINT PRIMARY KEY,
     nome  VARCHAR(50)  NOT NULL,
     email VARCHAR(50)  NOT NULL,
     senha VARCHAR(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 CREATE TABLE permissoes
 (
-    id        BIGINT(20) PRIMARY KEY,
+    id        BIGINT PRIMARY KEY,
     descricao VARCHAR(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 CREATE TABLE usuarios_permissoes
 (
-    id_usuario   BIGINT(20) NOT NULL,
-    id_permissao BIGINT(20) NOT NULL,
+    id_usuario   BIGINT NOT NULL,
+    id_permissao BIGINT NOT NULL,
     PRIMARY KEY (id_usuario, id_permissao),
     FOREIGN KEY (id_usuario) REFERENCES usuarios (id),
     FOREIGN KEY (id_permissao) REFERENCES permissoes (id)
-) ENGINE =InnoDB DEFAULT CHARSET=utf8;
+) ENGINE =InnoDB DEFAULT CHARSET=UTF8MB4;
 
 INSERT INTO usuarios (id, nome, email, senha)
 values (1, 'Administrador', 'admin@algamoney.com', '$2a$10$X607ZPhQ4EgGNaYKt3n4SONjIv9zc.VMWdEuhCuba7oLAL5IvcL5.');

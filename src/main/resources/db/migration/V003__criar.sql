@@ -1,17 +1,17 @@
 CREATE TABLE lancamentos
 (
-    id               BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+    id               BIGINT PRIMARY KEY AUTO_INCREMENT,
     descricao        VARCHAR(50)    NOT NULL,
     data_vencimento  DATE           NOT NULL,
     data_pagamento   DATE,
     valor            DECIMAL(10, 2) NOT NULL,
     observacao       VARCHAR(100),
     tipo             VARCHAR(20)    NOT NULL,
-    codigo_categoria BIGINT(20) NOT NULL,
-    codigo_pessoa    BIGINT(20) NOT NULL,
+    codigo_categoria BIGINT NOT NULL,
+    codigo_pessoa    BIGINT NOT NULL,
     FOREIGN KEY (codigo_categoria) REFERENCES categorias (id),
     FOREIGN KEY (codigo_pessoa) REFERENCES pessoas (id)
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+) Engine=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 INSERT INTO lancamentos (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, codigo_categoria,
                          codigo_pessoa)
