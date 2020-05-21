@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -22,6 +23,7 @@ public class Pessoa {
     private Long id;
     @NotNull
     private String nome;
+    @Valid
     @Embedded
     private Endereco endereco;
     @NotNull
