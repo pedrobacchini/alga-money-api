@@ -1,6 +1,6 @@
 package br.com.irvem.algamoneyapi.model;
 
-import br.com.irvem.algamoneyapi.constraint.HasId;
+import br.com.irvem.algamoneyapi.constraint.NotNullEntityId;
 import lombok.*;
 
 import javax.persistence.Embeddable;
@@ -23,9 +23,9 @@ public class Endereco {
     private String bairro;
     private String cep;
 
-    @HasId
     @NotNull
     @ManyToOne
+    @NotNullEntityId
     @JoinColumn(name = "codigo_cidade")
     private Cidade cidade;
 }
