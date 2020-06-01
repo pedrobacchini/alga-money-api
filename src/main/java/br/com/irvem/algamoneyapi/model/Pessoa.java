@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,13 +22,20 @@ public class Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotNull
     private String nome;
+
     @Valid
     @Embedded
     private Endereco endereco;
+
     @NotNull
     private Boolean ativo;
+
+    @Valid
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    private List<Contato> contatos;
 
     @JsonIgnore
     @Transient
