@@ -29,7 +29,10 @@ public class PessoaService {
         return pessoaSalva.orElseThrow(() -> new EmptyResultDataAccessException(1));
     }
 
-    public Pessoa salvar(Pessoa pessoa) { return pessoaRepository.save(pessoa); }
+    public Pessoa salvar(Pessoa pessoa) {
+        pessoa.getContatos().forEach(contato -> contato.setPessoa(pessoa));
+        return pessoaRepository.save(pessoa);
+    }
 
     public void remover(Long id) {
         pessoaRepository.deleteById(id);
@@ -37,7 +40,12 @@ public class PessoaService {
 
     public Pessoa atualizar(Long id, Pessoa pessoa) {
         Pessoa pessoaSalva = buscarPeloID(id);
-        BeanUtils.copyProperties(pessoa, pessoaSalva, "id");
+
+        pessoaSalva.getContatos().clear();
+        pessoaSalva.getContatos().addAll(pessoa.getContatos());
+        pessoaSalva.getContatos().forEach(contato -> contato.setPessoa(pessoaSalva));
+
+        BeanUtils.copyProperties(pessoa, pessoaSalva, "id", "contatos");
         return pessoaRepository.save(pessoaSalva);
     }
 
