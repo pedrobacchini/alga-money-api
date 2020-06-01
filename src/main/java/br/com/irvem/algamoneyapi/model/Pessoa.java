@@ -1,6 +1,7 @@
 package br.com.irvem.algamoneyapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,6 +35,7 @@ public class Pessoa {
     private Boolean ativo;
 
     @Valid
+    @JsonIgnoreProperties(value = "pessoa")
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
     private List<Contato> contatos;
 
