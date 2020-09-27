@@ -12,7 +12,7 @@ public class SecurityConstants {
             "/webjars/**"
     };
 
-    public static final String[] GET_PUBLIC_MATCHERS = {
+    public static final String[] PUBLIC_MATCHERS = {
             "/categorias"
     };
 }

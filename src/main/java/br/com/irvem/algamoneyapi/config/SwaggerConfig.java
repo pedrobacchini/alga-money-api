@@ -35,7 +35,7 @@ public class SwaggerConfig {
         Parameter authorization = new ParameterBuilder().name("Authorization")
                 .description("Header para token JWT")
                 .modelRef(new ModelRef("string")).parameterType("header")
-                .defaultValue("Basic NDExMTAyODczMDU6MTIzNDU2") //CPF: 41110287305 Senha: 123456 codificado base64
+                .defaultValue("Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==") //email: admin@algamoney.com Senha: admin codificado base64
                 .required(false)
                 .build();
 

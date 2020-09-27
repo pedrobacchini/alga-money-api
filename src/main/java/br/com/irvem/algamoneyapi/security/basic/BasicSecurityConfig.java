@@ -30,7 +30,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(SecurityConstants.TEST_PUBLIC_MATCHERS).permitAll()
-                .antMatchers(HttpMethod.GET, SecurityConstants.GET_PUBLIC_MATCHERS).permitAll()
+                .antMatchers(SecurityConstants.PUBLIC_MATCHERS).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()

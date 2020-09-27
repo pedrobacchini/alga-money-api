@@ -35,7 +35,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(SecurityConstants.TEST_PUBLIC_MATCHERS).permitAll()
-                .antMatchers(HttpMethod.GET, SecurityConstants.GET_PUBLIC_MATCHERS).permitAll()
+                .antMatchers(SecurityConstants.PUBLIC_MATCHERS).permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable();
