@@ -3,6 +3,7 @@ package br.com.irvem.algamoneyapi.resource;
 import br.com.irvem.algamoneyapi.config.AlgamoneyApiProperty;
 import br.com.irvem.algamoneyapi.security.UsuarioSistema;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,6 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@Profile("oauth-security")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/token")
@@ -34,17 +36,20 @@ public class TokenResource {
         response.setStatus(HttpStatus.NO_CONTENT.value());
     }
 
+    // TODO para testar contexto de segurança
     @GetMapping("/userSession")
     public Object login() {
         return SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
+    // TODO para testar contexto de segurança
     @GetMapping("/userSessionParse")
     public UsuarioSistema loginParse() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (UsuarioSistema) authentication.getPrincipal();
     }
 
+    // TODO para testar contexto de segurança
     @GetMapping("/userSessionAuth")
     public UsuarioSistema login(@AuthenticationPrincipal UsuarioSistema usuarioSistema) {
         return usuarioSistema;

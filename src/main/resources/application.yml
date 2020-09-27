@@ -2,7 +2,7 @@ server:
   port: 7979
 spring:
   profiles:
-    active: oauth-security
+    active: basic-security
   datasource:
     url: jdbc:mysql://localhost:33066/algamoney?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
