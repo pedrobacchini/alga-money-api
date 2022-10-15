@@ -13,6 +13,7 @@ public class SecurityConstants {
     };
 
     public static final String[] PUBLIC_MATCHERS = {
-            "/categorias"
+            "/categorias",
+            "/categorias/**"
     };
 }
